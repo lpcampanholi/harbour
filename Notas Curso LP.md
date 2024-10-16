@@ -8,9 +8,10 @@ exit
 * clear
 limpar a tela
 
-Sair do programa Alt + X
+Sair do editor Alt + X
 
 Salvar Ctrl + K + S
+
 Configurar: Esc (abre Menu) > Backups (deixar OFF) > Save curret Settings (Yes)
 
 Compilar:
