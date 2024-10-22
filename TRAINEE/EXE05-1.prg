@@ -1,21 +1,28 @@
 clear
 
-nNumero1 := 2
-nNumero2 := 10
+nNumero1 := 0
+nNumero2 := 0
 
-@ 00,00 to 03,27
-@ 01,01 say "O antigo valor de n1 e " + AllTrim ( Str( nNumero1 ) ) + "."
-@ 02,01 say "O antigo valor de n2 e " + AllTrim ( Str( nNumero2 ) ) + "."
+@ 00,00 to 04,29
 
-@ 04,00 to 06,27
-@ 05,01 say "Trocando valores..."
+@ 01,01 say "Insira numeros entre 0 e 99:"
+@ 02,01 say "Valor de n1: " 
+@ 03,01 say "Valor de n2: "
+
+@ 02,14 get nNumero1 picture "99" valid nNumero1 >= 0 .and. nNumero1 <=99
+@ 03,14 get nNumero2 picture "99" valid nNumero2 >= 0 .and. nNumero2 <=99
+read
+
+@ 05,00 to 07,29
+
+@ 06,01 say "Trocando valores..."
 
 nNumero3 := nNumero1
 nNumero1 := nNumero2
 nNumero2 := nNumero3
 
-@ 07,00 to 10,27
-@ 08,01 say "O novo valor de n1 e " + AllTrim ( Str( nNumero1 ) ) + "."
-@ 09,01 say "O novo valor de n2 e " + AllTrim ( Str( nNumero2 ) ) + "."
+@ 08,00 to 11,29
+@ 09,01 say "Novo valor de n1: " + Transform( nNumero1, "99" )
+@ 10,01 say "Novo valor de n2: " + Transform( nNumero2, "99" )
 
-@ 11,01 say ""
+@ 12,01 say ""

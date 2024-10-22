@@ -1,8 +1,12 @@
 clear
 
-nValorProdutoA := 10
-nValorProdutoB := 5.25
-nValorProdutoC := 20
+cNomeProdutoA := Space(20)
+cNomeProdutoB := Space(20)
+cNomeProdutoC := Space(20)
+
+nValorProdutoA := 0
+nValorProdutoB := 0
+nValorProdutoC := 0
 
 nQuantidadeProdutoA := 0
 nQuantidadeProdutoB := 0
@@ -10,21 +14,28 @@ nQuantidadeProdutoC := 0
 
 nValorTotal := 0
 
-@ 01,01 say "Valor Produto A: " + Transform( nValorProdutoA, "@E 999.99" )
-@ 02,01 say "Valor Produto B: " + Transform( nValorProdutoB, "@E 999.99" )
-@ 03,01 say "Valor Produto C: " + Transform( nValorProdutoC, "@E 999.99" )
-@ 04,01 say ""
+@ 00,00 to 10,30 double
 
-@ 05,01 say "Qtde Produto A:  "
-@ 06,01 say "Qtde Produto B:  "
-@ 07,01 say "Qtde Produto C:  "
-@ 08,01 say ""
+@ 01,10 say "CADASTRO DE PRODUTOS"
 
-@ 05,18 get nQuantidadeProdutoA picture "999"
-@ 06,18 get nQuantidadeProdutoB picture "999"
-@ 07,18 get nQuantidadeProdutoC picture "999"
+@ 03,01 say "| Produto |"
+@ 03,25 say "Valor | "
+@ 03,33 say "Qtde"
+
+@ 04,01 say "|A: "
+@ 05,01 say "|B: "
+@ 06,01 say "|C: "
+
+@ 04,04 get cNomeProdutoA  picture "@!"         valid !Empty(cNomeProdutoA)
+@ 05,04 get cNomeProdutoB  picture "@!"         valid !Empty(cNomeProdutoB)
+@ 06,04 get cNomeProdutoC  picture "@!"         valid !Empty(cNomeProdutoC)
+@ 14,04 get nValorProdutoA picture "@E 999.99"  valid nValorProdutoA >= 0
+@ 05,04 get nValorProdutoB picture "@E 999.99"  valid nValorProdutoB >= 0
+@ 06,04 get nValorProdutoC picture "@E 999.99"  valid nValorProdutoC >= 0
+@ 06,04
 read
 
-nValorTotal = (nQuantidadeProdutoA * nValorProdutoA) + (nQuantidadeProdutoB * nQuantidadeProdutoB) + (nQuantidadeProdutoC * nValorProdutoC)
 
-@ 09,01 say "Total a pagar:   " +  Transform( nValorTotal, "@E 999.99" )
+// nValorTotal = (nQuantidadeProdutoA * nValorProdutoA) + (nQuantidadeProdutoB * nQuantidadeProdutoB) + (nQuantidadeProdutoC * nValorProdutoC)
+
+// @ 09,01 say "Total a pagar:   " +  Transform( nValorTotal, "@E 999.99" )

@@ -9,8 +9,8 @@ nNumero3 := 0
 @ 01,01 say "Escreva o numero 1: "
 @ 02,01 say "Escreva o numero 2: "
 
-@ 01,21 get nNumero1 picture "@E 999.99"
-@ 02,21 get nNumero2 picture "@E 999.99"
+@ 01,21 get nNumero1 picture "@E 999.99" valid nNumero1 >= 0
+@ 02,21 get nNumero2 picture "@E 999.99" valid nNumero2 >= 0
 read
 
 nMedia := (nNumero1 + nNumero2 + nNumero3) / 3
