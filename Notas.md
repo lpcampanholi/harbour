@@ -82,7 +82,7 @@ Transform( nNumero1, "@E 999.99" )
 @ 03,01 get nPreco       picture "@E 999.99" valid nPreco >= 0
 @ 04,01 get nTemperatura picture "999.99"    valid nTemperatura >= -10 .and. nTemperatura <= 50
 ```
-## Valicao de Strings
+## Inicializacao e Validacao de Strings
 
 ```h
 cNome := Space(40)
