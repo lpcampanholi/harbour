@@ -91,7 +91,7 @@ cNome := Space(40)
 @ 01,07 get cNome picture "@!" valid !Empty(cNome)
 ```
 
-## Limpar só uma parte da tela
+## clear to
 ```h
 @ 00,00 to 24,79 double
 @ 01,01 clear to 23,78
@@ -110,4 +110,20 @@ dFixa       := CToD("01/01/12") //
 
 @ 01,01 get dNascimento valid dNascimento <= dAtual
 read
+```
+
+## Empty()
+```h
+cNome       := Space(10)
+nIdade      := 0
+dNascimento := CToD("")
+
+? Empty(cNome)        // .T.
+? Empty(nIdade)       // .T.
+? Empty(dNascimento)  // .T.
+```
+
+## Conversão de Data
+```h
+@ 01,01 say "A data de nascimento e " + DToC(dNascimento)
 ```

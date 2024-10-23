@@ -14,11 +14,11 @@ nQuantidadeProdutoC := 0
 
 nValorTotal := 0
 
-@ 00,00 to 10,30 double
+@ 00,00 to 07,36 double
 
-@ 01,10 say "CADASTRO DE PRODUTOS"
+@ 01,08 say "CADASTRO DE PRODUTOS"
 
-@ 03,01 say "Nome do Produto"
+@ 03,04 say "Nome do Produto"
 @ 03,25 say "Valor"
 @ 03,32 say "Qtde"
 
@@ -27,17 +27,22 @@ nValorTotal := 0
 @ 06,01 say "C: "
 
 @ 04,04 get cNomeProdutoA       picture "@!"         valid !Empty(cNomeProdutoA)
-@ 05,04 get cNomeProdutoB       picture "@!"         valid !Empty(cNomeProdutoB)
-@ 06,04 get cNomeProdutoC       picture "@!"         valid !Empty(cNomeProdutoC)
-
 @ 04,25 get nValorProdutoA      picture "@E 999.99"  valid nValorProdutoA >= 0
-@ 05,25 get nValorProdutoB      picture "@E 999.99"  valid nValorProdutoB >= 0
-@ 06,25 get nValorProdutoC      picture "@E 999.99"  valid nValorProdutoC >= 0
-
 @ 04,32 get nQuantidadeProdutoA picture "@E 999"     valid nQuantidadeProdutoA >= 0
+read
+
+@ 05,04 get cNomeProdutoB       picture "@!"         valid !Empty(cNomeProdutoB)
+@ 05,25 get nValorProdutoB      picture "@E 999.99"  valid nValorProdutoB >= 0
 @ 05,32 get nQuantidadeProdutoB picture "@E 999"     valid nQuantidadeProdutoB >= 0
+read
+
+@ 06,04 get cNomeProdutoC       picture "@!"         valid !Empty(cNomeProdutoC)
+@ 06,25 get nValorProdutoC      picture "@E 999.99"  valid nValorProdutoC >= 0
 @ 06,32 get nQuantidadeProdutoC picture "@E 999"     valid nQuantidadeProdutoC >= 0
 read
+
+
+Empty()
 
 
 // nValorTotal = (nQuantidadeProdutoA * nValorProdutoA) + (nQuantidadeProdutoB * nQuantidadeProdutoB) + (nQuantidadeProdutoC * nValorProdutoC)
