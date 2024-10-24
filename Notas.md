@@ -33,7 +33,7 @@
 2. Selecione `Backups` e deixe como `OFF`.
 3. Escolha `Save current Settings` e confirme com `Yes`.
 
-## Str
+## Str()
 Converte um valor para String. Usado na concatenação.
 ```h
 @ 01,01 say "A soma entre o numero 1 e o numero 2 e: " + Str( nNumero1 + nNumero2 )
@@ -45,7 +45,7 @@ Converte um valor para String. Usado na concatenação.
 @ 00,00 to 02,45 double  // caixa dupla
 ```
 
-## AllTrim
+## AllTrim()
 Remove espaços em branco do início e do fim de uma string.
 ```h
 @ 01,01 say "Total: " + AllTrim( Str( nTotal ) )
@@ -123,7 +123,33 @@ dNascimento := CToD("")
 ? Empty(dNascimento)  // .T.
 ```
 
-## Conversão de Data
+## DToC()
+22/10 - Terça-feira
 ```h
 @ 01,01 say "A data de nascimento e " + DToC(dNascimento)
+```
+
+## If
+23/10 - Quarta-feira
+
+* Estrutura:
+```
+if <condicao>
+  codigo
+elseif <condicao>
+  codigo
+else <condicao>
+  codigo
+endif
+```
+E
+* Exemplo:  
+```h
+nIdade := 0
+
+@ 01,01 say "A"
+
+if nIdade >= 18
+   @ 02,01 say "B"
+endif
 ```
