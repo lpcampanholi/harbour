@@ -1,0 +1,5 @@
+clear
+
+nCodigoProduto := 0
+
+

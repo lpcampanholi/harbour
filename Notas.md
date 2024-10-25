@@ -129,7 +129,7 @@ dNascimento := CToD("")
 @ 01,01 say "A data de nascimento e " + DToC(dNascimento)
 ```
 
-## If
+## if
 23/10 - Quarta-feira
 
 * Estrutura:
@@ -152,4 +152,29 @@ nIdade := 0
 if nIdade >= 18
    @ 02,01 say "B"
 endif
+```
+
+## set color
+```h
+set color to "b/g" // letra /fundo
+// clear
+@ 00,00 to 03,10 color "r/gr"
+@ 01,01 say "OI"
+@ 02,01 say "OI" color "r/gr"
+set color to "n/w"
+@ 05,05 to 08,08
+```
+
+"n" = preto
+"w" = branco
+"b" = azul
+"g" = verde
+"r" = vermelho
+"gr" = amarelo
+
+## InKey()
+```h
+@ 01,01 say "A"
+InKey(0)
+@ 02,01 say "B"
 ```
