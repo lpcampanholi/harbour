@@ -96,7 +96,7 @@ cDisciplina1Dependencia := Space(20)
 cDisciplina2Dependencia := Space(20)
 cDisciplina3Dependencia := Space(20)
 
-@ 00,00 to 24,79
+@ 00,00 to 25,79
 
 @ 01,01 say "                           ESCOLA RECANTO DO SABER"
 @ 02,01 say "ENDERECO: R. SAO JOAO, 1203 ZONA 08 MARINGA PR"
