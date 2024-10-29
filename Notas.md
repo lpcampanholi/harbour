@@ -178,3 +178,30 @@ set color to "n/w"
 InKey(0)
 @ 02,01 say "B"
 ```
+
+## Extração de Datas
+28/10/2024
+
+```h
+dExemplo    := Date()
+nAno        := Year(dExemplo) // 2024
+nMes        := Month(dExemplo) // 10
+nDia        := Day(dExemplo) // 28
+nDiaSemana  := DoW(dExemplo) // 2
+```
+1- Dom, 2- Seg, ..., 7-Sab
+
+## $ - Contido
+
+"a" == "A" x
+!("a" == "A") v
+
+"a" = "A" v
+"a" != "A" x
+
+"a" $ "bca" v
+"a" $ "BCA" x
+"ca" $ "bca" V
+"aBc" $ "abc" X
+
+funciona como == .or. ==
