@@ -205,3 +205,40 @@ nDiaSemana  := DoW(dExemplo) // 2
 "aBc" $ "abc" X
 
 funciona como == .or. ==
+
+## do while
+
+```h
+cNome       := Space(20)
+nContador   := 1
+nLinha      := 2
+
+@ 01,01 say "NOME: "
+@ 01,07 get cNome picture "@!" valid !Empty(cNome)
+read
+
+do while nContador <= 10
+    @ nLinha++,01 say cNome
+    nContador++
+enddo
+```
+
+## EXIT / LOOP
+
+```h
+do while .t.
+  if nIdade < 18
+    exit
+  else
+    loop
+  endif
+enddo
+```
+
+## LastKey()
+
+```h
+  if LastKey() == 27 // ESC
+    exit
+  endif
+```
