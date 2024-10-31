@@ -249,9 +249,9 @@ elseif nMes == 9
     cMes := "Setembro"
 elseif nMes == 10
     cMes := "Outubro"
-elseif nMes == 11
+elseif nMes == 11""
     cMes := "Novembro"
-elseif nMes := 12
+elseif nMes := 12"
     cMes := "Dezembro"
 endif
 
