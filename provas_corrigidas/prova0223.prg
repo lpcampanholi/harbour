@@ -31,8 +31,8 @@ nPorcetagemAumentoSeguradora2   := 0
 nValorFinalSeguradora1          := 0
 nValorFinalSeguradora2          := 0
 
-cCorSeguradora1                 := Space(3)
-cCorSeguradora2                 := Space(3)
+cCorSeguradora1                 := "g/n"
+cCorSeguradora2                 := "g/n"
 
 // CABEÇALHO
 @ 00,00 to 04,70
@@ -58,9 +58,9 @@ clear
 @ 05,01 say "Ano Primeira CNH..: "
 
 @ 03,21 get cNome           picture "@!"    valid !Empty(cNome)
-@ 03,63 get nIdade          picture "999"   valid nIdade >= 0 .and. nIdade <= 120
-@ 04,21 get cSexo           picture "!@"    valid cSexo == "M" .or. cSexo == "F"
-@ 05,21 get nPrimeiraCNH    picture "9999"  valid nPrimeiraCNH >= 1900 .and. nPrimeiraCNH <= Year(Date())
+@ 03,63 get nIdade          picture "999"   valid nIdade >= 18 .and. nIdade <= 120
+@ 04,21 get cSexo           picture "!@"    valid cSexo $ "MF"
+@ 05,21 get nPrimeiraCNH    picture "9999"  valid nPrimeiraCNH <= dCotacao .and. (Year(dCotacao) - Year(nPrimeiraCNH)) <= (nIdade - 18)
 read
 
 clear
@@ -79,11 +79,11 @@ clear
 @ 08,24 say "[P]articular pr[O]fissional"
 
 @ 03,22 get cMarca          picture "@!"              valid !Empty(cMarca)
-@ 04,22 get nAnoFabricacao  picture "9999"            valid !Empty(nAnoFabricacao) .and. nAnoFabricacao <= Year(Date())
-@ 05,22 get cTipoVeiculo    picture "@!"              valid cTipoVeiculo == "P" .or. cTipoVeiculo == "E" .or. cTipoVeiculo == "L"
-@ 06,22 get nMotor          picture "9.9"             valid nMotor > 0.0 .and. nMotor <= 9.9
-@ 07,22 get nValorVeiculo   picture "@E 9999999.99"   valid nValorVeiculo > 0 .and. nValorVeiculo < 10000000
-@ 08,22 get cUsoVeiculo     picture "@!"              valid cUsoVeiculo = "P" .or. cUsoVeiculo = "O"
+@ 04,22 get nAnoFabricacao  picture "9999"            valid !Empty(nAnoFabricacao) .and. nAnoFabricacao <= Year(dCotacao)
+@ 05,22 get cTipoVeiculo    picture "@!"              valid cTipoVeiculo $ "PEL"
+@ 06,22 get nMotor          picture "9.9"             valid nMotor > 0
+@ 07,22 get nValorVeiculo   picture "@E 9999999.99"   valid nValorVeiculo > 0
+@ 08,22 get cUsoVeiculo     picture "@!"              valid cUsoVeiculo $ "PO"
 read
 
 clear
@@ -197,29 +197,25 @@ nValorFinalSeguradora2 = nValorBaseSeguradora2 + (nValorBaseSeguradora2 * nPorce
 
 // VALIDAÇÃO CORES
 if nValorFinalSeguradora1 > nValorFinalSeguradora2
-    cCorSeguradora1 := "w/g"
-    cCorSeguradora2 := "w/r"
+    cCorSeguradora2 := "r/n"
 else
-    cCorSeguradora2 := "w/g"
-    cCorSeguradora1 := "w/r"
+    cCorSeguradora1 := "r/n"
 endif
 
 // RELATÓRIO COTAÇÕES
-@ 02,00 to 08,34 color cCorSeguradora1
-@ 02,01 clear to 08,33 color cCorSeguradora1
+@ 02,00 to 08,34 
 @ 03,01 say "SEGUROS E CIA"
 @ 04,01 say Replicate("-", 33)
-@ 05,01 say "Mensal......: " + Transform(nValorFinalSeguradora1 / 12, "@E 99999.99") color cCorSeguradora1
-@ 06,01 say "Trimestral..: " + Transform(nValorFinalSeguradora1 / 3, "@E 99999.99") color cCorSeguradora1
-@ 07,01 say "Anual.......: " + Transform(nValorFinalSeguradora1, "@E 99999.99") color cCorSeguradora1
+@ 05,01 say "Mensal......: " + Transform(nValorFinalSeguradora1 / 12, "@E 99999.99")
+@ 06,01 say "Trimestral..: " + Transform(nValorFinalSeguradora1 / 3, "@E 99999.99")
+@ 07,01 say "Anual.......: " + Transform(nValorFinalSeguradora1, "@E 99999.99")
 
-@ 02,37 to 08,71 color cCorSeguradora2
-@ 02,01 clear to 08,33 color cCorSeguradora1
+@ 02,37 to 08,71
 @ 03,38 say "AUTO SEGUROS SA"
 @ 04,38 say Replicate("-", 33)
-@ 05,38 say "Mensal......: " + Transform(nValorFinalSeguradora2 / 12, "@E 99999.99") color cCorSeguradora2
-@ 06,38 say "Trimestral..: " + Transform(nValorFinalSeguradora2 / 3, "@E 99999.99") color cCorSeguradora2
-@ 07,38 say "Anual.......: " + Transform(nValorFinalSeguradora2, "@E 99999.99") color cCorSeguradora2
+@ 05,38 say "Mensal......: " + Transform(nValorFinalSeguradora2 / 12, "@E 99999.99")
+@ 06,38 say "Trimestral..: " + Transform(nValorFinalSeguradora2 / 3, "@E 99999.99")
+@ 07,38 say "Anual.......: " + Transform(nValorFinalSeguradora2, "@E 99999.99")
 
 // DATA VALIDADE COTACAO
 nAno                    := Year(dCotacao)
@@ -264,7 +260,7 @@ else
 endif
 
 // Monta a data do último dia do mês
-dPrimeiroDiaProximoMes := CtoD("01/" + StrZero(nProximoMes, 2) + "/" + AllTrim(Str(nAno)))
+dPrimeiroDiaProximoMes := CtoD("01/" + AllTrim(Str(nProximoMes)) + "/" + AllTrim(Str(nAno)))
 dUltimoDiaMes := dPrimeiroDiaProximoMes - 1
 
 @ 10,01 say "Cotacao valida ate " + AllTrim(Str((Day(dUltimoDiaMes)))) + " de " + AllTrim(cMes) + " de " + AllTrim(Str(nAno))
