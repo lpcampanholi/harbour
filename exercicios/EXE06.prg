@@ -1,3 +1,5 @@
+// Elabore um programa que tenha três números e apresente sua média.
+
 clear
 
 nNumero1 := 0

@@ -1,3 +1,5 @@
+// Suponha-se que em um mercado exista apenas os produtos a, b e c. O produto a vale R$10,00, o b R$5,25 e o c R$ 20,00. Faça um programa que o usuário entre com a quantidadde de cada produto e calcule o valor da conta deste cliente e a imprima na tela.
+
 clear
 
 cNomeProdutoA := Space(20)

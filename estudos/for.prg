@@ -1,3 +1,3 @@
-FOR i := 1 TO 500
+for i := 1 to 500
   ? i
-NEXT
+next

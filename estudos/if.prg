@@ -1,8 +1,9 @@
-LOCAL nIdade := 20
+local nIdade := 20
+
 ? "Idade:" , nIdade
 
-IF nIdade >= 18
+if nIdade >= 18
    ? "maior de idade"
-ELSE
+else
    ? "menor de idade"
-ENDIF
+endif

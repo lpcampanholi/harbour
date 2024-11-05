@@ -1,6 +1,9 @@
-PROCEDURE MAIN
-   LOCAL aArray := {10, 20, 30, 40, 50}
-   FOR n := 1 TO LEN(aArray)
+procedure main
+
+   local aArray := {10, 20, 30, 40, 50}
+
+   for n := 1 to Len(aArray)
       ? aArray[n]
-   NEXT
-RETURN
+   next
+
+return

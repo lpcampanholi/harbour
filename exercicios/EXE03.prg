@@ -1,3 +1,5 @@
+// Elabore um programa que tenha dois números e apresente seu produto. Utilize variáveis.
+
 clear
 
 do while .t.

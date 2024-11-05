@@ -33,7 +33,7 @@ elseif nMes == 10
     cMes := "OUTUBRO"
 elseif nMes == 11
     cMes := "NOVEMBRO"
-elseif nMes := 12
+elseif nMes == 12
     cMes := "DEZEMBRO"
 endif
 

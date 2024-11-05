@@ -1,3 +1,5 @@
+// Construir um programa que faça a leitura de dois números e apresente na tela o resultado das quatro operações básicas efetuadas sobre estes números (soma, subtração, divisão e multiplicação).
+
 clear
 
 nNumero1 := 0

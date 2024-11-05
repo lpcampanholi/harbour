@@ -1,3 +1,12 @@
+/*
+Faça um algoritmo que leia o nome do nadador e a idade, classifique-o em uma das seguintes categorias e mostre na tela:
+Infantil A = 5 - 7 anos
+Infantil B = 8 - 10 anos
+Juvenil A = 11 - 13 anos
+Juvenil B = 14 - 17 anos
+senior = maiores de 18 anos
+*/
+
 clear
 
 cNome       := Space(30)

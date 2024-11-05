@@ -1,3 +1,5 @@
+// Faça um programa que leia uma letra, uma data, um número inteiro, um número com casas decimais e uma string, depois os apresente.
+
 set epoch to 1940
 set date to british
 

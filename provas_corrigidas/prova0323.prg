@@ -86,7 +86,6 @@ do while nContador <= nEmpregados
     endif
 
     // Verificação Idade
-
     nIdade := Year(Date()) - Year(dNascimento) // verificação da data da Idade
 
     nMesAniversario := Month(dNascimento)
@@ -163,7 +162,7 @@ do while nContador <= nEmpregados
     // Loop
     nContador++
     nEmpregadosAnalisados++
-    @ 07,01 clear to 25,80 // nao precisa do clear to
+    @ 07,01 clear to 25,80
     enddo
 
     if nOpcao == 1

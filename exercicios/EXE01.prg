@@ -1,6 +1,5 @@
-clear // limpar a tela
+// Elabore um programa que apresente a mensagem "alô mundo!".
 
-// 25 linhas por 80 colunas
-// Nao usar acentuacao
+clear
 
 @ 12,10 say "Alo mundo!"

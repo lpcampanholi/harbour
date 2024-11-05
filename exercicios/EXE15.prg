@@ -1,3 +1,5 @@
+// Faça um programa que imprima seu nome 10 vezes
+
 clear
 
 cNome       := Space(20)

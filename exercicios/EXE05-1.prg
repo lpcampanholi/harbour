@@ -1,3 +1,5 @@
+// Construir um programa que possua duas variáveis numéricas A e B, e efeture a troca dos valores, de forma que a variável A passe a possuir o valor da variável B e vice-versa. Apresente os valores trocados. (trocar os valores na memória, não apenas na tela). Obs. A e B são nomes fictícios.
+
 clear
 
 nNumero1 := 0

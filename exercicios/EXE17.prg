@@ -1,8 +1,10 @@
+// Faça um programa que leia uma palavra e imprima invertida
+
 clear
 
 cPalavra            := Space(20)
 cPalavraInvertida   := Space(20)
-nTamanho           := 0
+nTamanho            := 0
 
 @ 01,01 say "PALAVRA: "
 

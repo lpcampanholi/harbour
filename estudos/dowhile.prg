@@ -1,7 +1,10 @@
-PROCEDURE main
-  LOCAL n := 1
-  DO WHILE n < 5
+procedure main
+  
+  local n := 1
+
+ do while n < 5
     ? n
     n++
-  ENDDO
-RETURN
+  enddo
+
+return

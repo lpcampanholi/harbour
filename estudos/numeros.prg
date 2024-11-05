@@ -1,3 +1,3 @@
-PROCEDURE main
+procedure main
   ? 25 + "25"
-RETURN
+return

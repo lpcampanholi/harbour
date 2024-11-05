@@ -1,6 +1,6 @@
 REQUEST HB_CODEPAGE_UTF8 //chamada para aceitar acentos
 
-PROCEDURE main
+procedure main
    hb_cdpselect("UTF8") //chamada para aceitar acentos
 
    ? "Ola mundo"
@@ -9,7 +9,7 @@ PROCEDURE main
    ? 'ola'
    ? [ola]
    ? "Exemplo","com virgula"
-   ? "ola"+"mundo"
+   ? "ola" + "mundo"
 
    // concatenacao com , adiciona espaco automaticamente
 
@@ -18,10 +18,10 @@ PROCEDURE main
       "mas aparece em apenas uma linhas."
 
    // nao precisa usar ; no final das frases
-   // O ; é usado para quebrar linhas
+   // O ; ï¿½ usado para quebrar linhas
 
    ? "ola pessoal!"; ? "Como voces estao?"; ? "Espero que bem."
 
    ? "25" + "25"
    ? 25 + 25
-RETURN
+return

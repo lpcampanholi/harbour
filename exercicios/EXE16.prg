@@ -1,3 +1,5 @@
+// Faça um programa que pergunte quantas vezes deve imprimir seu nome.
+
 clear
 
 cNome       := Space(20)

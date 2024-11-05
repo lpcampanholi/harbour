@@ -1,3 +1,5 @@
+// Faça um programa que mostre seu nome, idade e peso.
+
 clear
 
 do while .t.

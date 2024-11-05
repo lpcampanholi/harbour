@@ -1,3 +1,5 @@
+// Faça um algoritmo que receba três números inteiros e verifique qual é o maior.
+
 clear
 
 nNumero1    := 0

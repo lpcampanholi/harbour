@@ -43,4 +43,4 @@ endif
 dPrimeiroDiaProximoMes := CtoD("01/" + StrZero(nProximoMes, 2) + "/" + AllTrim(Str(nAno)))
 dUltimoDiaMes := dPrimeiroDiaProximoMes - 1
 
-@ 10,01 say "Cotacao valida ate " + AllTrim(Str((Day(dUltimoDiaMes)))) + " de " + AllTrim(cMes) + " de " + AllTrim(Str(nAno))
+@ 01,01 say "Cotacao valida ate " + AllTrim(Str((Day(dUltimoDiaMes)))) + " de " + AllTrim(cMes) + " de " + AllTrim(Str(nAno))

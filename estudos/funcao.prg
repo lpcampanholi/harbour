@@ -1,8 +1,8 @@
-FUNCTION soma(a, b)
-RETURN a + b
+function soma(a, b)
+return a + b
 
-PROCEDURE main
+procedure main
    n1 := 5
    n2 := 7
    ? "Soma:", soma(n1, n2)
-RETURN
+return

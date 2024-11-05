@@ -1,6 +1,7 @@
-PROCEDURE main
-   LOCAL cNome
-   LOCAL nIdade
+procedure main
+   
+   local cNome
+   local nIdade
 
    ? "Digite seu nome"
    cNome := input()
@@ -11,4 +12,4 @@ PROCEDURE main
    ? "Seu nome e:", cNome
    ? "Sua idade e:", nIdade
 
-RETURN
+return

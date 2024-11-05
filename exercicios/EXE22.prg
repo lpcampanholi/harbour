@@ -1,3 +1,5 @@
+// Faça um programa que leia a mesada de um adolescente. Após isso o programa deve solicitar as compras do adolescente até que a sua mesada acabe ou ele decida parar de comprar. Obs. O programa não deve deixar o adolescente fazer uma compra acima do valor que ele possui.
+
 clear
 
 do while .t.
