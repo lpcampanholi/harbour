@@ -3,7 +3,7 @@
 clear
 
 cPalavra            := Space(20)
-cPalavraInvertida   := Space(20)
+cPalavraInvertida   := ""
 nTamanho            := 0
 
 @ 01,01 say "PALAVRA: "
