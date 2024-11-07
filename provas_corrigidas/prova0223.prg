@@ -260,7 +260,7 @@ else
 endif
 
 // Monta a data do último dia do mês
-dPrimeiroDiaProximoMes := CtoD("01/" + AllTrim(Str(nProximoMes)) + "/" + AllTrim(Str(nAno)))
+dPrimeiroDiaProximoMes := CtoD("01/" + Str(nProximoMes) + "/" + Str(nAno))
 dUltimoDiaMes := dPrimeiroDiaProximoMes - 1
 
 @ 10,01 say "Cotacao valida ate " + AllTrim(Str((Day(dUltimoDiaMes)))) + " de " + AllTrim(cMes) + " de " + AllTrim(Str(nAno))

@@ -6,6 +6,7 @@ set message to 23 center
 set wrap on
 
 cTodasSenhas        := ""
+nQuantidadeSenhas   := 0
 nOpcao              := 0
 
 do while .t.
@@ -31,7 +32,7 @@ do while .t.
         do while .t.
             clear
 
-            nCodigo                     := 1
+            nCodigo                     := nQuantidadeSenhas + 1
             cSenha                      := Space(20)
             dCadastro                   := Date()
             nTamanhoSenha               := 0
@@ -104,8 +105,8 @@ do while .t.
             
             if lTamanhoMinimo .and. lContemNumero .and. lContemLetraMaiuscula .and. lContemLetraMinuscula .and. lContemCaractereEspecial
                 Alert("Senha cadastrada com sucesso!")
-                cTodasSenhas += DToC(dCadastro) + cSenha
-                nCodigo++
+                cTodasSenhas += "|" + StrZero(nCodigo, 2) + DToC(dCadastro) + AllTrim(cSenha)
+                nQuantidadeSenhas++
                 exit
             else
                 Alert(cMensagemErro)
@@ -126,20 +127,15 @@ do while .t.
         nCodigoConsulta             := 0
         nCaractere                  := 0
         cSenhaEscolhida             := ""
-        cCadastroSenhaEscolhida     := ""
+        dCadastroSenhaEscolhida     := CtoD("")
         nTamanhoTodasSenhas         := 0
         
         @ 01,01 say "Codigo.........: "
         @ 02,01 say "Senha..........: "
         @ 03,01 say "Data cadastro..:"
 
-        @ 01,18 get nCodigoConsulta picture "999" valid !Empty(nCodigoConsulta)
+        @ 01,18 get nCodigoConsulta picture "999" valid !Empty(nCodigoConsulta) .and. nCodigoConsulta <= nQuantidadeSenhas
         read
-
-        if nCodigoConsulta + 1 > nCodigo
-            Alert("Codigo nao cadastrado")
-            exit
-        endif
 
         if LastKey() == 27
             nOpcao := Alert("Voltar?", {"Sim", "Nao"})
@@ -149,20 +145,44 @@ do while .t.
         endif
         
         // Buscar Senha na String
+        // |0102/10/24/senha
+        nTamanhoTodasSenhas := Len(AllTrim(cTodasSenhas))
+        nContadorCaracteres := 1
+        cPipeECodigo := "|" + StrZero(nCodigoConsulta, 2)
+        cPipeEProximoCodigo := "|" + StrZero(nCodigoConsulta + 1, 2)
 
-        cSenhaEscolhida := SubStr(cTodasSenhas, (nCodigoConsulta * 20) - 12, 12)
-        cCadastroSenhaEscolhida := SubStr(cTodasSenhas, (nCodigoConsulta * 20) - 19, 8)
+        nComecoData         := 0
+        nComecoSenha        := 0
+        nFimSenhaEscolhida  := 0
+        
+        do while nContadorCaracteres <= nTamanhoTodasSenhas
+            cCaracteresDaVez := SubStr(cTodasSenhas, nContadorCaracteres, 3)
+            if cCaracteresDaVez == cPipeECodigo
+                nComecoData := nContadorCaracteres + 3
+                nComecoSenha := nContadorCaracteres + 11
+            endif
+            if nQuantidadeSenhas == 1 .or. nCodigoConsulta == nQuantidadeSenhas
+                nFimSenhaEscolhida := nTamanhoTodasSenhas
+            elseif cCaracteresDaVez == cPipeEProximoCodigo
+                nFimSenhaEscolhida := nContadorCaracteres - 1
+            endif
+            nContadorCaracteres++
+        enddo
+
+        cSenhaEscolhida := SubStr(cTodasSenhas, nComecoSenha, nFimSenhaEscolhida - nComecoSenha + 1)
+        dCadastroSenhaEscolhida := CToD(SubStr(cTodasSenhas, nComecoData, 8))
 
         @ 02,18 say cSenhaEscolhida
-        @ 03,18 say cCadastroSenhaEscolhida
+        @ 03,18 say dCadastroSenhaEscolhida
+
         // Calendário
 
-        dData := CToD(cCadastroSenhaEscolhida)
+        dData := dCadastroSenhaEscolhida
         
         // Primeiro dia do mês
         nMes := Month(dData)
         nAno := Year(dData)
-        dPrimeiroDiaDoMes := CToD("01/" + Str(nMes) + "/" + AllTrim(Str(nAno)))
+        dPrimeiroDiaDoMes := CToD("01/" + StrZero(nMes, 2) + "/" + AllTrim(Str(nAno)))
     
         // Dia da semana do primeiro dia do mês
         nDiaDaSemanaDoPrimeiroDiaDoMes := DoW(dPrimeiroDiaDoMes)
@@ -178,7 +198,7 @@ do while .t.
         else
             nProximoMes := nMes + 1
         endif
-        dPrimeiroDiaProximoMes := CToD("01/" + Str(nProximoMes) + "/" + AllTrim(Str(nAno)))
+        dPrimeiroDiaProximoMes := CToD("01/" + StrZero(nProximoMes, 2) + "/" + AllTrim(Str(nAno)))
         dUltimoDiaDoMes := dPrimeiroDiaProximoMes - 1
         nTotalDiasMes := Day(dUltimoDiaDoMes)
         

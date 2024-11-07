@@ -1,4 +1,4 @@
-set epoch to 1940
+set century on
 set date to british
 
 do while .t.
@@ -7,7 +7,7 @@ do while .t.
     
     dData := Date()
 
-    @ 01,01 say "Calendario"
+    @ 01,01 say "      Calendario"
     @ 02,01 say "-----------------------"
     @ 03,01 say "Data: "
     
@@ -25,7 +25,7 @@ do while .t.
     // Primeiro dia do mês
     nMes := Month(dData)
     nAno := Year(dData)
-    dPrimeiroDiaDoMes := CToD("01/" + StrZero(nMes, 2) + "/" + AllTrim(Str(nAno)))
+    dPrimeiroDiaDoMes := CToD("01/" + Str(nMes) + "/" + Str(nAno))
 
     // Dia da semana do primeiro dia do mês
     nDiaDaSemanaDoPrimeiroDiaDoMes := DoW(dPrimeiroDiaDoMes)
@@ -41,7 +41,7 @@ do while .t.
     else
         nProximoMes := nMes + 1
     endif
-    dPrimeiroDiaProximoMes := CToD("01/" + StrZero(nProximoMes, 2) + "/" + AllTrim(Str(nAno)))
+    dPrimeiroDiaProximoMes := CToD("01/" + Str(nProximoMes) + "/" + Str(nAno))
     dUltimoDiaDoMes := dPrimeiroDiaProximoMes - 1
     nTotalDiasMes := Day(dUltimoDiaDoMes)
     
