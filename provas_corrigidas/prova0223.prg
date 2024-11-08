@@ -50,7 +50,7 @@ clear
 // DADOS PESSOAIS
 @ 00,00 to 06,70
 
-@ 01,01 say Replicate(" ", 25) + "DADOS PESSOAIS"
+@ 01,01 say "                         DADOS PESSOAIS"
 @ 03,01 say "Nome..............: "
 @ 03,55 say "Idade: "
 @ 04,01 say "Sexo..............: "
@@ -60,7 +60,7 @@ clear
 @ 03,21 get cNome           picture "@!"    valid !Empty(cNome)
 @ 03,63 get nIdade          picture "999"   valid nIdade >= 18 .and. nIdade <= 120
 @ 04,21 get cSexo           picture "!@"    valid cSexo $ "MF"
-@ 05,21 get nPrimeiraCNH    picture "9999"  valid nPrimeiraCNH <= dCotacao .and. (Year(dCotacao) - Year(nPrimeiraCNH)) <= (nIdade - 18)
+@ 05,21 get nPrimeiraCNH    picture "9999"  valid !Empty(nPrimeiraCNH) .and. (Year(dCotacao) - nPrimeiraCNH) <= (nIdade - 18)
 read
 
 clear
@@ -68,7 +68,7 @@ clear
 // DADOS DO VEÍCULO
 @ 00,00 to 09,70
 
-@ 01,01 say Replicate(" ", 25) + "DADOS DO VEICULO"
+@ 01,01 say "                         DADOS DO VEICULO"
 @ 03,01 say "Marca..............: "
 @ 04,01 say "Ano de Fabricacao..: "
 @ 05,01 say "Tipo...............: "
@@ -204,18 +204,24 @@ endif
 
 // RELATÓRIO COTAÇÕES
 @ 02,00 to 08,34 
-@ 03,01 say "SEGUROS E CIA"
-@ 04,01 say Replicate("-", 33)
-@ 05,01 say "Mensal......: " + Transform(nValorFinalSeguradora1 / 12, "@E 99999.99")
-@ 06,01 say "Trimestral..: " + Transform(nValorFinalSeguradora1 / 3, "@E 99999.99")
-@ 07,01 say "Anual.......: " + Transform(nValorFinalSeguradora1, "@E 99999.99")
+@ 03,01 say "         SEGUROS E CIA"
+@ 04,01 say "---------------------------------"
+@ 05,01 say "Mensal......: "
+@ 06,01 say "Trimestral..: "
+@ 07,01 say "Anual.......: "
+@ 05,15 say nValorBaseSeguradora1 / 12  picture "@E 99999.99" color cCorSeguradora1
+@ 06,15 say nValorBaseSeguradora1 / 3   picture "@E 99999.99" color cCorSeguradora1
+@ 07,15 say nValorBaseSeguradora1       picture "@E 99999.99" color cCorSeguradora1
 
 @ 02,37 to 08,71
-@ 03,38 say "AUTO SEGUROS SA"
-@ 04,38 say Replicate("-", 33)
-@ 05,38 say "Mensal......: " + Transform(nValorFinalSeguradora2 / 12, "@E 99999.99")
-@ 06,38 say "Trimestral..: " + Transform(nValorFinalSeguradora2 / 3, "@E 99999.99")
-@ 07,38 say "Anual.......: " + Transform(nValorFinalSeguradora2, "@E 99999.99")
+@ 03,38 say "         AUTO SEGUROS SA"
+@ 04,38 say "---------------------------------"
+@ 05,38 say "Mensal......: "
+@ 06,38 say "Trimestral..: "
+@ 07,38 say "Anual.......: "
+@ 05,53 say nValorBaseSeguradora2 / 12  picture "@E 99999.99" color cCorSeguradora2
+@ 06,53 say nValorBaseSeguradora2 / 3   picture "@E 99999.99" color cCorSeguradora2
+@ 07,53 say nValorBaseSeguradora2       picture "@E 99999.99" color cCorSeguradora2
 
 // DATA VALIDADE COTACAO
 nAno                    := Year(dCotacao)
