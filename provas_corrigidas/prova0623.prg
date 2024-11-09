@@ -7,7 +7,7 @@ cDica1                  := Space(30)
 cDica2                  := Space(30)
 cDica3                  := Space(30)
 cAlfabeto               := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-nTentativasTotaisTotais := 0
+nTentativasTotais       := 0
 nTamanhoPalavraChave    := 0
 nOpcao                  := 0
 
@@ -164,9 +164,9 @@ do while .t.
          @ 04,30 say "   |"   // corpo
       elseif nTentativa == 3
          @ 04,30 say "  /|\"  // braços
-      elseif nTentativa == 4
+      elseif nTentativa == 4 .and. nTentativa < nTentativasTotais
          @ 05,30 say "  / \ " // pernas
-      elseif nTentativa == 5
+      elseif nTentativa == 5 .and. nTentativa < nTentativasTotais
          @ 05,30 say " _/ \_" // pés
       endif
 
