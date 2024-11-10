@@ -1,19 +1,19 @@
 // Luís Plinio Gabriel Campanholi dos Santos
 
-cNome                   := Space(20)
-cDificuldade            := Space(1)
-cPalavraChave           := Space(20)
-cDica1                  := Space(30)
-cDica2                  := Space(30)
-cDica3                  := Space(30)
-cAlfabeto               := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-nTentativasTotais       := 0
-nTamanhoPalavraChave    := 0
-nOpcao                  := 0
-
 do while .t.
+   
+   cNome                   := Space(20)
+   cDificuldade            := Space(1)
+   cPalavraChave           := Space(20)
+   cDica1                  := Space(30)
+   cDica2                  := Space(30)
+   cDica3                  := Space(30)
+   cAlfabeto               := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+   nTentativasTotais       := 0
+   nTamanhoPalavraChave    := 0
+   nOpcao                  := 0
 
-    clear
+   clear
 
    @ 01,01 say "                Jogo da forca"
    @ 02,01 say "----------------------------------------------"
