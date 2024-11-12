@@ -1,18 +1,18 @@
 // Luís Plinio Gabriel Campanholi dos Santos
 
-cNome                   := Space(20)
-cDificuldade            := Space(1)
-cPalavraChave           := Space(20)
-cDica1                  := Space(30)
-cDica2                  := Space(30)
-cDica3                  := Space(30)
-cAlfabeto               := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-nTentativasTotaisTotais := 0
-nTamanhoPalavraChave    := 0
-nOpcao                  := 0
-
 do while .t.
-
+   
+   cNome                   := Space(20)
+   cDificuldade            := Space(1)
+   cPalavraChave           := Space(20)
+   cDica1                  := Space(30)
+   cDica2                  := Space(30)
+   cDica3                  := Space(30)
+   cAlfabeto               := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+   nTentativasTotaisTotais := 0
+   nTamanhoPalavraChave    := 0
+   nOpcao                  := 0
+   
     clear
 
    @ 01,01 say "                Jogo da forca"
@@ -24,17 +24,8 @@ do while .t.
 
    @ 03,18 get cNome           picture "@!"    valid !Empty(cNome)
    @ 04,18 get cDificuldade    picture "@!"    valid cDificuldade $ "FMD"
-   @ 28,18 get cPalavraChave   picture "@!"    valid !Empty(cPalavraChave)
+   @ 05,18 get cPalavraChave   picture "@!"    valid !Empty(cPalavraChave) color "w/w"
    read
-
-   /* Professor, não sei como escrever isso, mas penso que a lógica seria algo assim:
-   Quando o usuário digita qualquer tecla, ele imprime os XXXXXXXX
-   Vou fazer uma gambiarra, exibindo o get cPalavraChave fora da tela, para que o usuário não veja ;)
-
-   if LastKey() == "qualquer uma"
-      @ 05,18 say "XXXXXXXXXXXXXXXXXXXX"
-   endif
-   */
 
    nTamanhoPalavraChave := Len(AllTrim(cPalavraChave))
 
@@ -130,15 +121,6 @@ do while .t.
          if cLetraChutada == cLetraBuscada
             @ 09,nContadorPalavraChave say cLetraChutada picture "@!"
             nLetrasAcertadas++
-            // Busca no alfabeto
-            nContadorAlfabeto := 1
-            do while nContadorAlfabeto <= Len(AllTrim(cAlfabeto))
-               cLetraBuscadaAlfabeto := SubStr(cAlfabeto, nContadorAlfabeto, 1)
-               if cLetraBuscadaAlfabeto == cLetraChutada
-                  @ 03,nContadorAlfabeto say cLetraBuscadaAlfabeto color "r/n"
-               endif
-               nContadorAlfabeto++
-            enddo
          endif
          nContadorPalavraChave++
       enddo
@@ -146,6 +128,16 @@ do while .t.
       if !(cLetraChutada $ cPalavraChave)
          nTentativa++
       endif
+
+      // Busca no alfabeto
+      nContadorAlfabeto := 1
+      do while nContadorAlfabeto <= Len(AllTrim(cAlfabeto))
+         cLetraBuscadaAlfabeto := SubStr(cAlfabeto, nContadorAlfabeto, 1)
+         if cLetraBuscadaAlfabeto == cLetraChutada
+            @ 03,nContadorAlfabeto say cLetraBuscadaAlfabeto color "r/n"
+         endif
+         nContadorAlfabeto++
+      enddo
 
       if nLetrasAcertadas == nTamanhoPalavraChave
          Alert("Voce acertou, parabens!!!")
@@ -175,11 +167,10 @@ do while .t.
          @ 05,30 say "  / \ " // pernas
       elseif nTentativa == 5
          @ 05,30 say " _/ \_" // pés
-      elseif nTentativa == 6
-         @ 03,30 say " --|--"  color "r/n" // forca
       endif
-
+      
       if nTentativa > nTentativasTotais
+         @ 03,30 say " --|--"  color "r/n" // forca
          nOpcao := Alert("Deu forca! Jogar novamente?", {"Sim", "Nao"})
          exit
       endif
