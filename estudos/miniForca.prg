@@ -3,16 +3,22 @@ do while .t.
     clear
     
     cPalavraChave           := Space(20)
+    cDica                   := Space(20)
     cLetrasDigitadas        := ""
-    nTamanhoPalavraChave    := 0
+
     nLetrasAcertadas        := 0
-    nTentativasTotal        := 5
+    nTentativasTotal        := 6
     nTentativa              := 0
     nOpcao                  := 0
     nOpcaoJogar             := 0
 
-    @ 01,01 say "Palavra Chave: "
-    @ 01,16 get cPalavraChave picture "@!" valid !Empty(cPalavraChave)
+    @ 01,01 say "              JOGO DA FORCA"
+    @ 02,01 say "--------------------------------------------"
+    @ 04,01 say "Palavra Chave..: "
+    @ 05,01 say "Dica...........: "
+
+    @ 04,18 get cPalavraChave   picture "@!"  valid !Empty(cPalavraChave) color "w/w"
+    @ 05,18 get cDica           picture "@!"
     read
 
     if LastKey() == 27
@@ -28,19 +34,20 @@ do while .t.
     // Imprimir traços
     nContadorPalavra := 1
     do while nContadorPalavra <= nTamanhoPalavraChave
-        @ 05,nContadorPalavra say "_"
+        @ 13,nContadorPalavra say "_"
         nContadorPalavra++ 
     enddo
 
+    // Chutes
     do while .t.
 
         cLetraChutada := Space(1)
 
-        // Ler
-        @ 03,01 say cLetrasDigitadas
-        @ 06,01 say "Digite uma letra: "
+        @ 07,01 say "A palavra tem " + AllTrim(Str(nTamanhoPalavraChave)) + " letras."
+        @ 09,01 say cLetrasDigitadas color "gr"
+        @ 16,01 say "Digite uma letra: "
 
-        @ 06,19 get cLetraChutada picture "@!" valid !Empty(cLetraChutada)
+        @ 16,19 get cLetraChutada picture "@!" valid !Empty(cLetraChutada)
         read
 
         if LastKey() == 27
@@ -52,14 +59,19 @@ do while .t.
         endif
 
         // Imprimir a letra
-        cLetraChutada += cLetrasDigitadas  + " "
+        if cLetraChutada $ cLetrasDigitadas
+            Alert("A letra " + cLetraChutada + " ja foi. Tente outra.")
+            loop
+        else
+            cLetrasDigitadas += cLetraChutada  + " "
+        endif
         
         // Verifica a palavra
         nContador := 1
         do while nContador <= nTamanhoPalavraChave
             cLetra := SubStr(cPalavraChave, nContador, 1)
             if cLetra == cLetraChutada
-                @ 04,nContador say cLetraChutada
+                @ 12,nContador say cLetraChutada
                 nLetrasAcertadas++
             endif
             nContador++   
@@ -78,29 +90,30 @@ do while .t.
         
         // Desenho do boneco
         if nTentativa == 1
-            @ 05,30 say "  O"
+            @ 07,29 say "  O"
         elseif nTentativa == 2
-            @ 06,30 say "  |"
-            @ 07,30 say "  |"
+            @ 08,29 say "  |"
+            @ 09,29 say "  |"
         elseif nTentativa == 3
-            @ 07,30 say " \|/"
+            @ 09,29 say " \|/"
         elseif nTentativa == 4
-            @ 09,30 say " / \"
+            @ 11,29 say " / \"
         elseif nTentativa == 5
-            @ 09,30 say "_/ \_"
+            @ 11,29 say "_/ \_"
         endif
         
         // Derrota
         if nTentativa >= nTentativasTotal
-            @ 06,30 say "--|--" color "r"
+            @ 08,29 say "--|--" color "r"
             nOpcaoJogar := Alert("Deu forca. Jogar novamente?", {"Sim", "Nao"})
+            Alert("A palavra chave era: " + AllTrim(cPalavraChave))
             exit
         endif
         
     enddo
 
     if nOpcaoJogar == 2
-        exit        
+        exit
     endif
 
 enddo
