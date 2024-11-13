@@ -89,6 +89,7 @@ do while .t. // Loop login
             nValorTotalOrdemDeServico    := 0
             nComissaoDoTecnico           := 0
             nTempoVidaEquipamento        := 0 // Em anos
+            cCorLimite                   := "g/n"
                
             @ 01,01 say "                        NOVA ORDEM DE SERVICO"
             @ 02,01 say "--------------------------------------------------------------------------"
@@ -99,7 +100,7 @@ do while .t. // Loop login
             @ 07,01 say "Nome do Tecnico...........: "
             @ 08,01 say "Descricao do equipamento..: "
             @ 09,01 say "Data da compra............: "
-            @ 10,01 say "Entrega em domicilio......?  [S]im [N]ao       Limite de credito: "
+            @ 10,01 say "Entrega em domicilio......?  [S]im, [N]ao      Limite de credito: "
                
             @ 05,29 get cNomeCliente            picture "@!"            valid !Empty(cNomeCliente)
             @ 06,29 get dOrdemServico                                   valid !Empty(dOrdemServico) .and. dOrdemServico <= Date()
@@ -161,7 +162,7 @@ do while .t. // Loop login
             clear
                               
             // Tela de cadastro de produtos e serviços
-            @ 01,01 say "O que deseja cadastrar?....  [P]RODUTOS [S]ERVICOS"
+            @ 01,01 say "O que deseja cadastrar?....  [P]RODUTOS, [S]ERVICOS"
             @ 02,01 say "--------------------------------------------------------------------------"
             @ 03,01 say "                               PRODUTOS"
             @ 04,01 say "--------------------------------------------------------------------------"
@@ -183,6 +184,7 @@ do while .t. // Loop login
             @ 20,01 say "--------------------------------------------------------------------------"
             @ 21,01 say "Valor total..: "
             @ 22,01 say "Limite.......: "
+            @ 23,01 say "--------------------------------------------------------------------------"
             @ 21,16 say nValorTotalOrdemDeServico     picture "@E 99999.99"
             @ 22,16 say nLimiteCredito                picture "@E 99999.99" color "g/n"
 
@@ -218,6 +220,7 @@ do while .t. // Loop login
                      if LastKey() == 27
                         nOpcao := Alert("Voltar para o tipo de cadastro?", {"Voltar", "Continuar"})
                         if nOpcao == 1
+                           @ nLinhaProduto,01 clear to nLinhaProduto,80
                            exit
                         endif
                         loop
@@ -239,28 +242,68 @@ do while .t. // Loop login
             
                      nValorTotalOrdemDeServico += nSubtotalProduto
                      nLimiteCredito -= nSubtotalProduto
+                     
+                     // Cor limite
+                     if  nLimiteCredito <= 0
+                        cCorLimite := "r/n"
+                     else
+                        cCorLimite := "g/n"
+                     endif
             
                      @ nLinhaProduto,67 say nSubtotalProduto  picture "@E 99999.99"
                      @ 21,01 say "Valor total..: "
                      @ 22,01 say "Limite.......: "
                      @ 21,16 say nValorTotalOrdemDeServico     picture "@E 99999.99"
-                     @ 22,16 say nLimiteCredito                picture "@E 99999.99" color "g/n"
+                     @ 22,16 say nLimiteCredito                picture "@E 99999.99" color cCorLimite
 
                      // Limite de crédito
                      if nValorTotalOrdemDeServico > nLimiteCredito
                         Alert("Limite de credito atingido.")
-                        @ 23,01 say "Senha do Supervisor..: "
+                        
+                        do while .t. // Limite de crédito
                            
-                        @ 23,24 get cSenhaSupervisor picture "@!" valid !Empty(cSenhaSupervisor) color "w/w"
-                        read
+                           @ 24,01 say "Para liberar o item, digite a senha do supervisor: "
+                           
+                           @ 24,52 get cSenhaSupervisor picture "@!" valid !Empty(cSenhaSupervisor) color "w/w"
+                           read
 
-                        if cSenhaSupervisor = "123LIBERA"
-                           Alert("Compra liberada.")
-                           loop
-                        else
-                           Alert("Senha incorreta.")
+                           if LastKey() == 27
+                              nOpcao := Alert("Voltar?", {"Sim", "Nao"})
+                              if nOpcao == 1
+                                 // Cancelar item
+                                 @ nLinhaProduto,01 clear to nLinhaProduto,80
+                                 @ 24,01 clear to 24,80
+                                 nLimiteCredito += nSubtotalProduto
+                                 nValorTotalOrdemDeServico -= nSubtotalProduto
+                                 // Cor limite
+                                 if  nLimiteCredito <= 0
+                                    cCorLimite := "r/n"
+                                 else
+                                    cCorLimite := "g/n"
+                                 endif
+                                 @ 21,16 say nValorTotalOrdemDeServico     picture "@E 99999.99"
+                                 @ 22,16 say nLimiteCredito                picture "@E 99999.99" color cCorLimite
+                                 exit
+                              endif
+                              loop
+                           endif
+                           
+                           if cSenhaSupervisor = "123LIBERA"
+                              exit
+                           else
+                              Alert("Senha incorreta. Tente novamente.")
+                              loop
+                           endif
+
+                        enddo  // Loop Limite de crédito
+
+                        if nOpcao == 1
                            exit
                         endif
+                        
+                        Alert("Item liberado.")
+                        @ 24,01 clear to 24,80
+
                      endif
             
                      if nLinhaProduto >= 10
@@ -294,6 +337,7 @@ do while .t. // Loop login
                      if LastKey() == 27
                         nOpcao := Alert("Voltar para o tipo de cadastro?", {"Voltar", "Continuar"})
                         if nOpcao == 1
+                           @ nLinhaServico,01 clear to nLinhaServico,80
                            exit
                         endif
                         loop
@@ -315,28 +359,68 @@ do while .t. // Loop login
                      nValorTotalOrdemDeServico += nSubtotalServico
                      nLimiteCredito -= nSubtotalServico
                      nComissaoDoTecnico += nSubtotalServico * (nPorcentagemComissaoTecnico / 100)
+
+                     // Cor limite
+                     if  nLimiteCredito <= 0
+                        cCorLimite := "r/n"
+                     else
+                        cCorLimite := "g/n"
+                     endif
             
                      @ nLinhaServico,67 say nSubtotalServico   picture "@E 99999.99"
                      @ 21,01 say "Valor total..: "
                      @ 22,01 say "Limite.......: "
                      @ 21,16 say nValorTotalOrdemDeServico     picture "@E 99999.99"
-                     @ 22,16 say nLimiteCredito                picture "@E 99999.99" color "g/n"
+                     @ 22,16 say nLimiteCredito                picture "@E 99999.99" color cCorLimite
 
                      // Limite de crédito
                      if nValorTotalOrdemDeServico > nLimiteCredito
                         Alert("Limite de credito atingido.")
-                        @ 23,01 say "Senha do Supervisor..: "
+                        
+                        do while .t. // Limite de crédito
                            
-                        @ 23,24 get cSenhaSupervisor picture "@!" valid !Empty(cSenhaSupervisor) color "w/w"
-                        read
+                           @ 24,01 say "Para liberar o item, digite a senha do supervisor: "
+                           
+                           @ 24,52 get cSenhaSupervisor picture "@!" valid !Empty(cSenhaSupervisor) color "w/w"
+                           read
 
-                        if cSenhaSupervisor = "123LIBERA"
-                           Alert("Compra liberada.")
-                           loop
-                        else
-                           Alert("Senha incorreta.")
+                           if LastKey() == 27
+                              nOpcao := Alert("Voltar?", {"Sim", "Nao"})
+                              if nOpcao == 1
+                                 // Cancelar item
+                                 @ nLinhaServico,01 clear to nLinhaServico,80
+                                 @ 24,01 clear to 24,80
+                                 nLimiteCredito += nSubtotalServico
+                                 nValorTotalOrdemDeServico -= nSubtotalServico
+                                 // Cor limite
+                                 if  nLimiteCredito <= 0
+                                    cCorLimite := "r/n"
+                                 else
+                                    cCorLimite := "g/n"
+                                 endif
+                                 @ 21,16 say nValorTotalOrdemDeServico     picture "@E 99999.99"
+                                 @ 22,16 say nLimiteCredito                picture "@E 99999.99" color cCorLimite
+                                 exit
+                              endif
+                              loop
+                           endif
+                           
+                           if cSenhaSupervisor = "123LIBERA"
+                              exit
+                           else
+                              Alert("Senha incorreta. Tente novamente.")
+                              loop
+                           endif
+
+                        enddo  // Loop Limite de crédito
+
+                        if nOpcao == 1
                            exit
                         endif
+                        
+                        Alert("Item liberado.")
+                        @ 24,01 clear to 24,80
+
                      endif
 
                      // Controle de linha
@@ -344,7 +428,7 @@ do while .t. // Loop login
                         @ 25,01 say "Pressione qualquer tecla para continuar.."
                         InKey(0)
                         @ 16,01 clear to 19,80
-                        @ 25,01 clear to 25,01
+                        @ 25,01 clear to 25,80
                         nLinhaServico := 16
                      else
                         nLinhaServico++
@@ -369,7 +453,7 @@ do while .t. // Loop login
 
                nCNPJ       := 0
                nNumeroNota := 0
-               dNota       := CToD("")
+               dNota       := Date()
                   
                @ 01,01 say "                           FORMA DE PAGAMENTO"
                @ 02,01 say "--------------------------------------------------------------------------"
@@ -397,27 +481,26 @@ do while .t. // Loop login
                   nValorTotalOrdemDeServico += nValorTotalOrdemDeServico * nTaxaDeEntrega
                endif
 
-               @ 10,01 say "--------------------------------------------------------------------------"
-               @ 11,01 say "Valor total da ordem de servico..: "
-               @ 12,01 say "Limite de credito................: "
-               @ 13,01 say "Comissao do tecnico..............: "
-               @ 14,01 say "--------------------------------------------------------------------------"
-               @ 11,36 say nValorTotalOrdemDeServico
-               @ 12,36 say nLimiteCredito
-               @ 13,36 say nComissaoDoTecnico
+               @ 04,01 say "--------------------------------------------------------------------------"
+               @ 05,01 say "Valor total da ordem de servico..: "
+               @ 06,01 say "Limite de credito................: "
+               @ 07,01 say "Comissao do tecnico..............: "
+               @ 08,01 say "--------------------------------------------------------------------------"
+               @ 05,36 say nValorTotalOrdemDeServico  picture "@E 99999.99"
+               @ 06,36 say nLimiteCredito             picture "@E 99999.99"
+               @ 07,36 say nComissaoDoTecnico         picture "@E 99999.99"
 
                if nValorTotalOrdemDeServico == 0
                   Alert("A ordem de servico e gratuita. Preencha os dados da nota fiscal")
-                  @ 15,01 say "--------------------------------------------------------------------------"
-                  @ 16,01 say "                       DADOS PARA NOTA FISCAL"
-                  @ 17,01 say "--------------------------------------------------------------------------"
-                  @ 18,01 say "CNPJ............: "
-                  @ 19,01 say "Numero da nota..: "
-                  @ 20,01 say "Data da nota....: "
+                  @ 09,01 say "                       DADOS PARA NOTA FISCAL"
+                  @ 10,01 say "--------------------------------------------------------------------------"
+                  @ 11,01 say "CNPJ............: "
+                  @ 12,01 say "Numero da nota..: "
+                  @ 13,01 say "Data da nota....: "
 
-                  @ 18,19 get nCNPJ          picture "99999999999999"   valid !Empty(nCNPJ)
-                  @ 19,19 get nNumeroNota    picture "9999999999"       valid !Empty(nNumeroNota)
-                  @ 20,19 get dNota                                     valid !Empty(dNota)
+                  @ 11,19 get nCNPJ          picture "99999999999999"   valid !Empty(nCNPJ)
+                  @ 12,19 get nNumeroNota    picture "9999999999"       valid !Empty(nNumeroNota)
+                  @ 13,19 get dNota                                     valid !Empty(dNota) .and. dNota <= Date()
                   read
 
                   if LastKey() == 27
@@ -429,9 +512,9 @@ do while .t. // Loop login
                   endif
                endif
                   
-               @ 21,01 say "--------------------------------------------------------------------------"
-               @ 22,01 say "               ORDEM DE SERVICO REALIZADA COM SUCESSO!"
-               @ 23,01 say "--------------------------------------------------------------------------"
+               @ 14,01 say "--------------------------------------------------------------------------"
+               @ 15,01 say "               ORDEM DE SERVICO REALIZADA COM SUCESSO!"
+               @ 16,01 say "--------------------------------------------------------------------------"
                @ 25,01 say "Pressione qualquer tecla para continuar.."
 
                InKey(0)
