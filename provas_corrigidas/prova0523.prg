@@ -47,7 +47,7 @@ do while .t. // Loop login
    
    clear
 
-   @ 01,01 say "              FRUTARIA DO LUIS"
+   @ 01,01 say "              SEJA BEM-VINDO!"
    @ 02,01 say "---------------------------------------------"
    
    cUsuario := Space(20)
@@ -61,7 +61,7 @@ do while .t. // Loop login
    read
       
    if LastKey() == 27
-      nOpcao := Alert("Deseja sair?", {"Sim", "Nao"})
+      nOpcao := Alert("Sair?", {"Sim", "Nao"})
       if nOpcao == 1
          exit
       endif
@@ -69,202 +69,200 @@ do while .t. // Loop login
    endif
       
    // Validação usuário
-   if (cUsuario = cUsuario1 .and. cSenha = cSenhaUsuario1) .or. (cUsuario = cUsuario2 .and. cSenha = cSenhaUsuario2) .or. (cUsuario = cUsuario3 .and. cSenha = cSenhaUsuario3)
+   if !((cUsuario = cUsuario1 .and. cSenha = cSenhaUsuario1) .or. (cUsuario = cUsuario2 .and. cSenha = cSenhaUsuario2) .or. (cUsuario = cUsuario3 .and. cSenha = cSenhaUsuario3))
+      Alert("Dados incorretos. Tente novamente. Dica: Tente 'luis' senha '123'")
+      loop
+   endif
       
-      do while .t. // Loop menu
+   do while .t. // Loop menu
 
-         clear
+      clear
 
-         @ 01,01 say "              FRUTARIA DO LUIS"
-         @ 02,01 say "---------------------------------------------"
+      @ 01,01 say "              FRUTARIA DO LUIS"
+      @ 02,01 say "---------------------------------------------"
 
-         nOpacaoMenu := 1
+      nOpacaoMenu := 1
 
-         @ 03,01 prompt "Efetuar pedidos"    message "Fazer novo pedido"
-         @ 04,01 prompt "Sair"               message "Sair do programa"
-         menu to nOpcaoMenu
+      @ 03,01 prompt "Efetuar pedidos"    message "Fazer novo pedido"
+      @ 04,01 prompt "Sair"               message "Sair do programa"
+      menu to nOpcaoMenu
    
-         if Empty(nOpcaoMenu)
-            nOpcaoMenu := 2
-         endif
+      if Empty(nOpcaoMenu)
+         nOpcaoMenu := 2
+      endif
    
-         if nOpcaoMenu == 1 // Pedidos
+      if nOpcaoMenu == 1 // Pedidos
 
-            do while .t.
+         do while .t.
                
-               clear
+            clear
                
-               cNomeCliente         := Space(30)
-               nLimiteCredito       := 0
-               dPedido              := Date()
-               nLinha               := 10
-               nValorTotal          := 0
+            cNomeCliente         := Space(30)
+            nLimiteCredito       := 0
+            dPedido              := Date()
+            nLinha               := 10
+            nValorTotal          := 0
                
-               @ 01,01 say "                             NOVO PEDIDO"
-               @ 02,01 say "------------------------------------------------------------------------"
-               @ 03,01 say "Pedido " + AllTrim(Str(nPedidos))
-               @ 04,01 say "------------------------------------------------------------------------"
-               @ 05,01 say "Nome do cliente....: "
-               @ 06,01 say "Limite de credito..: "
-               @ 07,01 say "Data do pedido.....: "
+            @ 01,01 say "                             NOVO PEDIDO"
+            @ 02,01 say "------------------------------------------------------------------------"
+            @ 03,01 say "Pedido " + AllTrim(Str(nPedidos))
+            @ 04,01 say "------------------------------------------------------------------------"
+            @ 05,01 say "Nome do cliente....: "
+            @ 06,01 say "Limite de credito..: "
+            @ 07,01 say "Data do pedido.....: "
                
-               @ 05,22 get cNomeCliente      picture "@!"            valid !Empty(cNomeCliente)
-               @ 06,22 get nLimiteCredito    picture "@E 99999.99"   valid nLimiteCredito > 0
-               @ 07,22 get dPedido                                   valid !Empty(dPedido) .and. dPedido <= Date()
+            @ 05,22 get cNomeCliente      picture "@!"            valid !Empty(cNomeCliente)
+            @ 06,22 get nLimiteCredito    picture "@E 99999.99"   valid nLimiteCredito > 0
+            @ 07,22 get dPedido                                   valid !Empty(dPedido) .and. dPedido <= Date()
+            read
+               
+            if LastKey() == 27
+               nOpcao := Alert("Cancelar pedido?", {"Sim", "Nao"})
+               if nOpcao == 1
+                  exit
+               endif
+               loop
+            endif
+                              
+            do while .t. // Loop produtos
+                     
+               nCodigo              := 0
+               nQuantidade          := 0
+               nPorcentagemDesconto := 0
+               nSubtotal            := 0
+               cDescricao           := ""
+               nPreco               := 0
+               nMaximoDesconto      := 0
+               nEstoque             := 0
+      
+               @ 08,01 say "------------------------------------------------------------------------"
+               @ 09,01 say "Codigo  Descricao         Preco Unit.  Quantidade  Desconto(%)  Subtotal" 
+               @ 16,01 say "------------------------------------------------------------------------"
+               @ 17,01 say "Valor total..: "
+               @ 18,01 say "Limite.......: "
+               @ 17,16 say nValorTotal    picture "@E 99999.99"
+               @ 18,16 say nLimiteCredito picture "@E 99999.99" color "g/n"
+      
+               @ nLinha,01 get nCodigo       picture "9999" valid !Empty(nCodigo)
                read
-               
+      
                if LastKey() == 27
-                  nOpcao := Alert("Cancelar pedido?", {"Sim", "Nao"})
+                  nOpcao := Alert("Finalizar a compra?", {"Finalizar", "Voltar"})
                   if nOpcao == 1
                      exit
                   endif
                   loop
                endif
-                              
-               do while .t. // Loop produtos
-                     
-                  nCodigo              := 0
-                  nQuantidade          := 0
-                  nPorcentagemDesconto := 0
-                  nSubtotal            := 0
-                  cDescricao           := ""
-                  nPreco               := 0
-                  nMaximoDesconto      := 0
-                  nEstoque             := 0
       
-                  @ 08,01 say "------------------------------------------------------------------------"
-                  @ 09,01 say "Codigo  Descricao         Preco Unit.  Quantidade  Desconto(%)  Subtotal" 
-                  @ 16,01 say "------------------------------------------------------------------------"
-                  @ 17,01 say "Valor total..: "
-                  @ 18,01 say "Limite.......: "
-                  @ 17,16 say nValorTotal    picture "@E 99999.99"
-                  @ 18,16 say nLimiteCredito picture "@E 99999.99" color "g/n"
+               // Buscar produto
+               if nCodigo == nCodigoProduto1
+                  cDescricao := cDescricaoProduto1
+                  nPreco := nPrecoProduto1
+                  nMaximoDesconto := nMaximoDescontoProduto1
+                  nEstoque := nEstoqueProduto1
+               elseif nCodigo == nCodigoProduto2
+                  cDescricao := cDescricaoProduto2
+                  nPreco := nPrecoProduto2
+                  nMaximoDesconto := nMaximoDescontoProduto2
+                  nEstoque := nEstoqueProduto2
+               elseif nCodigo == nCodigoProduto3
+                  cDescricao := cDescricaoProduto3
+                  nPreco := nPrecoProduto3
+                  nMaximoDesconto := nMaximoDescontoProduto3
+                  nEstoque := nEstoqueProduto3
+               elseif nCodigo == nCodigoProduto4
+                  cDescricao := cDescricaoProduto4
+                  nPreco := nPrecoProduto4
+                  nMaximoDesconto := nMaximoDescontoProduto4
+                  nEstoque := nEstoqueProduto4
+               else
+                  Alert("Codigo invalido.")
+                  loop
+               endif
       
-                  @ nLinha,01 get nCodigo       picture "9999" valid !Empty(nCodigo)
-                  read
+               @ nLinha,09 say cDescricao
+               @ nLinha,28 say nPreco picture "@E 99.99"
       
-                  if LastKey() == 27
-                     nOpcao := Alert("Finalizar a compra?", {"Finalizar", "Voltar"})
-                     if nOpcao == 1
-                        exit
-                     endif
-                     loop
+               @ nLinha,47 get nQuantidade            picture "999"  valid nQuantidade > 0
+               @ nLinha,60 get nPorcentagemDesconto   picture "99"
+               read
+      
+               if LastKey() == 27
+                  nOpcao := Alert("Finalizar a compra?", {"Finalizar", "Voltar"})
+                  if nOpcao == 1
+                     exit
                   endif
+                  loop
+               endif
       
-                  // Buscar produto
-                  if nCodigo == nCodigoProduto1
-                     cDescricao := cDescricaoProduto1
-                     nPreco := nPrecoProduto1
-                     nMaximoDesconto := nMaximoDescontoProduto1
-                     nEstoque := nEstoqueProduto1
-                  elseif nCodigo == nCodigoProduto2
-                     cDescricao := cDescricaoProduto2
-                     nPreco := nPrecoProduto2
-                     nMaximoDesconto := nMaximoDescontoProduto2
-                     nEstoque := nEstoqueProduto2
-                  elseif nCodigo == nCodigoProduto3
-                     cDescricao := cDescricaoProduto3
-                     nPreco := nPrecoProduto3
-                     nMaximoDesconto := nMaximoDescontoProduto3
-                     nEstoque := nEstoqueProduto3
-                  elseif nCodigo == nCodigoProduto4
-                     cDescricao := cDescricaoProduto4
-                     nPreco := nPrecoProduto4
-                     nMaximoDesconto := nMaximoDescontoProduto4
-                     nEstoque := nEstoqueProduto4
-                  else
-                     Alert("Codigo invalido.")
-                     loop
-                  endif
+               if nPorcentagemDesconto > nMaximoDesconto
+                  Alert("Desconto maximo atingido.")
+                  @ nLinha,01 clear to nLinha,80
+                  loop
+               endif
       
-                  @ nLinha,09 say cDescricao
-                  @ nLinha,28 say nPreco picture "@E 99.99"
+               if nValorTotal > nLimiteCredito
+                  Alert("Voce atingiu o limite de credito.")
+                  @ nLinha,01 clear to nLinha,80
+                  loop
+               endif
       
-                  @ nLinha,47 get nQuantidade            picture "999"  valid nQuantidade > 0
-                  @ nLinha,60 get nPorcentagemDesconto   picture "99"
-                  read
-      
-                  if LastKey() == 27
-                     nOpcao := Alert("Finalizar a compra?", {"Finalizar", "Voltar"})
-                     if nOpcao == 1
-                        exit
-                     endif
-                     loop
-                  endif
-      
-                  if nPorcentagemDesconto > nMaximoDesconto
-                     Alert("Desconto maximo atingido.")
-                     @ nLinha,01 clear to nLinha,80
-                     loop
-                  endif
-      
-                  if nValorTotal > nLimiteCredito
-                     Alert("Voce atingiu o limite de credito.")
-                     @ nLinha,01 clear to nLinha,80
-                     loop
-                  endif
-      
-                  if nQuantidade > nEstoque
-                     Alert("Nao ha quantidade suficiente.")
-                     @ nLinha,01 clear to nLinha,80
-                     loop
-                  endif
+               if nQuantidade > nEstoque
+                  Alert("Nao ha quantidade suficiente.")
+                  @ nLinha,01 clear to nLinha,80
+                  loop
+               endif
                
-                  // Tirar do estoque
-                  if nCodigo == nCodigoProduto1
-                     nEstoqueProduto1 -= nQuantidade
-                  elseif nCodigo == nCodigoProduto2
-                     nEstoqueProduto2 -= nQuantidade
-                  elseif nCodigo == nCodigoProduto3
-                     nEstoqueProduto3 -= nQuantidade
-                  elseif nCodigo == nCodigoProduto4
-                     nEstoqueProduto4 -= nQuantidade
-                  endif
+               // Tirar do estoque
+               if nCodigo == nCodigoProduto1
+                  nEstoqueProduto1 -= nQuantidade
+               elseif nCodigo == nCodigoProduto2
+                  nEstoqueProduto2 -= nQuantidade
+               elseif nCodigo == nCodigoProduto3
+                  nEstoqueProduto3 -= nQuantidade
+               elseif nCodigo == nCodigoProduto4
+                  nEstoqueProduto4 -= nQuantidade
+               endif
       
-                  if !(nPorcentagemDesconto == 0)
-                     nSubtotal := nQuantidade * nPreco
-                     nSubtotal := nSubtotal - (nSubtotal * (nPorcentagemDesconto / 100))
-                  else
-                     nSubtotal := nQuantidade * nPreco
-                  endif
+               if !(nPorcentagemDesconto == 0)
+                  nSubtotal := nQuantidade * nPreco
+                  nSubtotal := nSubtotal - (nSubtotal * (nPorcentagemDesconto / 100))
+               else
+                  nSubtotal := nQuantidade * nPreco
+               endif
       
-                  nValorTotal += nSubtotal
-                  nLimiteCredito -= nSubtotal
+               nValorTotal += nSubtotal
+               nLimiteCredito -= nSubtotal
       
-                  @ nLinha,65 say nSubtotal  picture "@E 99999.99"
-                  @ 17,16 say nValorTotal    picture "@E 99999.99"
-                  @ 18,16 say nLimiteCredito picture "@E 99999.99" color "g/n"
+               @ nLinha,65 say nSubtotal  picture "@E 99999.99"
+               @ 17,16 say nValorTotal    picture "@E 99999.99"
+               @ 18,16 say nLimiteCredito picture "@E 99999.99" color "g/n"
       
-                  if nLinha >= 15
-                     @ 20,01 say "Pressione qualquer tecla para continuar.."
-                     InKey(0)
-                     @ 10,01 clear to 25,80
-                     nLinha := 10
-                  else
-                     nLinha++
-                  endif
+               if nLinha >= 15
+                  @ 20,01 say "Pressione qualquer tecla para continuar.."
+                  InKey(0)
+                  @ 10,01 clear to 25,80
+                  nLinha := 10
+               else
+                  nLinha++
+               endif
                
-               enddo // Loop de produtos
+            enddo // Loop de produtos
 
-               nPedidos++
+            nPedidos++
 
-            enddo // Loop de pedido
+         enddo // Loop de pedido
             
-         elseif nOpcaoMenu == 2 // Sair
+      elseif nOpcaoMenu == 2 // Sair
 
-            nOpcao := Alert("Fazer logout?", {"Sim", "Nao"})
-            if nOpcao == 1
-               exit
-            endif
-
+         nOpcao := Alert("Fazer logout?", {"Sim", "Nao"})
+         if nOpcao == 1
+            exit
          endif
-   
-      enddo // Loop de Menu
 
-   else
-      Alert("Dados incorretos. Tente novamente. Dica: Tente 'luis' senha '123'")
-      loop
-   endif
+      endif
+   
+   enddo // Loop de Menu
       
 enddo // Loop de login
 
